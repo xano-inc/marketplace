@@ -33,6 +33,12 @@ market_item "google-oauth-test" {
   tablemap user {
     mode = "merge-auth"
   
+    columns = {
+      {name: "created_at", required: false}
+      {name: "name", required: true}
+      {name: "email", required: true}
+    }
+
     schema {
       object google_oauth? {
         schema {
@@ -173,10 +179,10 @@ query "oauth/google/continue" verb=GET {
             name        : $userinfo.name
             email       : $userinfo.email
             google_oauth: {
-            id   : $userinfo.id
-            name : $userinfo.name
-            email: $userinfo.email
-          }
+              id   : $userinfo.id
+              name : $userinfo.name
+              email: $userinfo.email
+            }
           }
         } as $user
       }
@@ -291,10 +297,10 @@ query "oauth/google/signup" verb=GET {
         name        : $userinfo.name
         email       : $userinfo.email
         google_oauth: {
-        id   : $userinfo.id
-        name : $userinfo.name
-        email: $userinfo.email
-      }
+          id   : $userinfo.id
+          name : $userinfo.name
+          email: $userinfo.email
+        }
       }
     } as $new_user
   

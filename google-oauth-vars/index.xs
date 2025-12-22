@@ -32,7 +32,12 @@ market_item "google-oauth-vars" {
 
   tablemap user {
     mode = "merge-auth"
-  
+    columns = [
+      {name: "created_at", required: false}
+      {name: "name", required: false}
+      {name: "email", required: false}
+    ]
+
     schema {
       object google_oauth? {
         schema {
@@ -169,14 +174,20 @@ query "oauth/google/continue" verb=GET {
       if ($user == null) {
         db.add user {
           data = {
-            created_at  : "now"
-            name        : $userinfo.name
-            email       : $userinfo.email
+            {%- if market_item.tablemap.user.columns.created_at %}
+            {{market_item.tablemap.user.columns.created_at|json_encode}} : "now"
+            {%- endif %}
+            {%- if market_item.tablemap.user.columns.name %}
+            {{market_item.tablemap.user.columns.name|json_encode}}        : $userinfo.name
+            {%- endif %}
+            {%- if market_item.tablemap.columns.user.email %}
+            {{market_item.tablemap.user.columns.email]|json_encode}}       : $userinfo.email
+            {%- endif %}
             google_oauth: {
-            id   : $userinfo.id
-            name : $userinfo.name
-            email: $userinfo.email
-          }
+              id   : $userinfo.id
+              name : $userinfo.name
+              email: $userinfo.email
+            }
           }
         } as $user
       }
@@ -185,7 +196,6 @@ query "oauth/google/continue" verb=GET {
     security.create_auth_token {
       table = "user"
       extras = {
-        custom: {{ custom_field|json_encode }}
       }
       expiration = 86400
       id = $user.id
@@ -289,14 +299,20 @@ query "oauth/google/signup" verb=GET {
   
     db.add user {
       data = {
-        created_at  : "now"
-        name        : $userinfo.name
-        email       : $userinfo.email
+        {%- if market_item.tablemap.user.columns.created_at %}
+        {{market_item.tablemap.user.columns.created_at|json_encode}} : "now"
+        {%- endif %}
+        {%- if market_item.tablemap.user.columns.name %}
+        {{market_item.tablemap.user.columns.name|json_encode}}        : $userinfo.name
+        {%- endif %}
+        {%- if market_item.tablemap.columns.user.email %}
+        {{market_item.tablemap.user.columns.email]|json_encode}}       : $userinfo.email
+        {%- endif %}
         google_oauth: {
-        id   : $userinfo.id
-        name : $userinfo.name
-        email: $userinfo.email
-      }
+          id   : $userinfo.id
+          name : $userinfo.name
+          email: $userinfo.email
+        }
       }
     } as $new_user
   
