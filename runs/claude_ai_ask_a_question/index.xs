@@ -193,5 +193,5 @@ function "Claude AI -> Ask a Question" {
     }
   }
 
-  response = $response
+  response = $var.response
 }
