@@ -39,7 +39,7 @@ run.job "Claude AI -> Ask a Question" {
 //     - **Example:**
 //     ``` json
 //     {
-//       "model": "claude",
+//       "model": "claude-sonnet-4-20250514",
 //       "message": [
 //         {
 //            "role": "user",
@@ -79,7 +79,7 @@ run.job "Claude AI -> Ask a Question" {
 //             "text": "Neural networks are a type of machine learning algorithm ..."
 //         }
 //     ],
-//     "model": "claude-3-opus-20240229",
+//     "model": "claude-sonnet-4-20250514",
 //     "stop_reason": "end_turn",
 //     "stop_sequence": null,
 //     "usage": {
@@ -125,7 +125,7 @@ run.job "Claude AI -> Ask a Question" {
 //             "text": "Neural networks are a type of machine learning algorithm ..."
 //         }
 //     ],
-//     "model": "claude-3-opus-20240229",
+//     "model": "claude-sonnet-4-20250514",
 //     "stop_reason": "end_turn",
 //     "stop_sequence": null,
 //     "usage": {
@@ -137,7 +137,7 @@ run.job "Claude AI -> Ask a Question" {
 function "Claude AI -> Ask a Question" {
   input {
     // User prompt to be asked from AI
-    text prompt filters=trim
+    text prompt?="What is the most popular pizza topping?" filters=trim
   
     // Maximum number of tokens that can be used in single transaction
     int max_tokens?=1024
@@ -156,7 +156,7 @@ function "Claude AI -> Ask a Question" {
               url = "https://api.anthropic.com/v1/messages"
               method = "POST"
               params = {}
-                |set:"model":"claude-3-5-sonnet-20240620"
+                |set:"model":"claude-sonnet-4-20250514"
                 |set:"max_tokens":$input.max_tokens
                 |set:"messages":([]
                   |push:({}
