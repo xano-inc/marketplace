@@ -33,9 +33,9 @@ market_item "google-oauth-vars" {
   tablemap user {
     mode = "merge-auth"
     columns = [
-      {name: "created_at", required: false}
-      {name: "name", required: false}
-      {name: "email", required: false}
+      {name: "created_at", required: false, type: "timestamp"}
+      {name: "name", required: false, type: "text"}
+      {name: "email", required: false, type: "email"}
     ]
 
     schema {
