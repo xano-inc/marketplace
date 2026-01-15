@@ -28,7 +28,7 @@ api_group counter {
 query hit verb=GET {
   api_group = "counter"
   input {
-    text name
+    text name?="default"
   }
 
   stack {
@@ -64,7 +64,7 @@ query hit verb=GET {
 query reset verb=GET {
   api_group = "counter"
   input {
-    text name
+    text name?="default"
   }
 
   stack {
